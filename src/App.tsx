@@ -1,9 +1,11 @@
+import AppRoutes from './routes/AppRoutes';
+
 function App() {
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-      <h1 className="text-4xl font-bold">Hello Context Cart</h1>
+    <div className="min-h-screen bg-gray-900 text-white font-sans">
+      <AppRoutes />
     </div>
   )
 }
 
-export default App
+export default App;
