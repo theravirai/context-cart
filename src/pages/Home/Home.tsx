@@ -2,7 +2,7 @@ import Hero from '../../components/common/Hero';
 
 const Home = () => {
   return (
-    <div className="flex flex-col min-h-full -mx-4 -mt-8"> {/* Negative margins offset the MainLayout container padding to let Hero go full bleed */}
+    <div className="flex flex-col min-h-full w-full">
       <Hero />
       
       {/* Featured Categories Section */}
@@ -16,18 +16,11 @@ const Home = () => {
         
         {/* Placeholder for Category Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="h-48 bg-gray-800 rounded-lg animate-pulse flex items-center justify-center text-gray-500">
-            Category Card Placeholder
-          </div>
-          <div className="h-48 bg-gray-800 rounded-lg animate-pulse flex items-center justify-center text-gray-500">
-            Category Card Placeholder
-          </div>
-          <div className="h-48 bg-gray-800 rounded-lg animate-pulse flex items-center justify-center text-gray-500">
-            Category Card Placeholder
-          </div>
-          <div className="h-48 bg-gray-800 rounded-lg animate-pulse flex items-center justify-center text-gray-500">
-            Category Card Placeholder
-          </div>
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-48 bg-gray-800 rounded-lg animate-pulse flex items-center justify-center text-gray-500 border border-gray-700">
+              Category Card
+            </div>
+          ))}
         </div>
       </section>
 
@@ -43,18 +36,11 @@ const Home = () => {
           
           {/* Placeholder for Product Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="h-80 bg-gray-800 rounded-lg animate-pulse flex items-center justify-center text-gray-500 border border-gray-700">
-              Product Card Placeholder
-            </div>
-            <div className="h-80 bg-gray-800 rounded-lg animate-pulse flex items-center justify-center text-gray-500 border border-gray-700">
-              Product Card Placeholder
-            </div>
-            <div className="h-80 bg-gray-800 rounded-lg animate-pulse flex items-center justify-center text-gray-500 border border-gray-700">
-              Product Card Placeholder
-            </div>
-            <div className="h-80 bg-gray-800 rounded-lg animate-pulse flex items-center justify-center text-gray-500 border border-gray-700">
-              Product Card Placeholder
-            </div>
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-80 bg-gray-800 rounded-lg animate-pulse flex items-center justify-center text-gray-500 border border-gray-700">
+                Product Card
+              </div>
+            ))}
           </div>
         </div>
       </section>

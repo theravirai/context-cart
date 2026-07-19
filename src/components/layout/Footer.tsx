@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+import { Globe, MessageCircle, Mail, Phone } from 'lucide-react';
 import Button from '../common/Button';
 
 const Footer = () => {
@@ -15,17 +15,17 @@ const Footer = () => {
               Your one-stop destination for everything you need. Modern e-commerce platform built for the future.
             </p>
             <div className="flex space-x-4">
-              <a href="#" aria-label="Facebook" className="hover:text-white transition-colors">
-                <Facebook className="h-5 w-5" />
+              <a href="#" aria-label="Website" className="hover:text-white transition-colors">
+                <Globe className="h-5 w-5" />
               </a>
-              <a href="#" aria-label="Twitter" className="hover:text-white transition-colors">
-                <Twitter className="h-5 w-5" />
+              <a href="#" aria-label="Contact" className="hover:text-white transition-colors">
+                <MessageCircle className="h-5 w-5" />
               </a>
-              <a href="#" aria-label="Instagram" className="hover:text-white transition-colors">
-                <Instagram className="h-5 w-5" />
+              <a href="#" aria-label="Email" className="hover:text-white transition-colors">
+                <Mail className="h-5 w-5" />
               </a>
-              <a href="#" aria-label="YouTube" className="hover:text-white transition-colors">
-                <Youtube className="h-5 w-5" />
+              <a href="#" aria-label="Phone" className="hover:text-white transition-colors">
+                <Phone className="h-5 w-5" />
               </a>
             </div>
           </div>
