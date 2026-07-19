@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+import Button from '../common/Button';
 
 const Footer = () => {
   return (
@@ -9,9 +11,23 @@ const Footer = () => {
           {/* Column 1: Company Info */}
           <div>
             <h3 className="text-white text-lg font-bold mb-4">Context Cart</h3>
-            <p className="text-sm leading-relaxed">
+            <p className="text-sm leading-relaxed mb-6">
               Your one-stop destination for everything you need. Modern e-commerce platform built for the future.
             </p>
+            <div className="flex space-x-4">
+              <a href="#" aria-label="Facebook" className="hover:text-white transition-colors">
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a href="#" aria-label="Twitter" className="hover:text-white transition-colors">
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a href="#" aria-label="Instagram" className="hover:text-white transition-colors">
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a href="#" aria-label="YouTube" className="hover:text-white transition-colors">
+                <Youtube className="h-5 w-5" />
+              </a>
+            </div>
           </div>
           
           {/* Column 2: Quick Links */}
@@ -36,15 +52,33 @@ const Footer = () => {
             </ul>
           </div>
           
-          {/* Column 4: Placeholder for Newsletter */}
+          {/* Column 4: Newsletter */}
           <div>
-            {/* Newsletter will go here */}
+            <h4 className="text-white font-semibold mb-4 tracking-wide uppercase text-sm">Newsletter</h4>
+            <p className="text-sm mb-4">
+              Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.
+            </p>
+            <form className="flex flex-col space-y-2" onSubmit={(e) => e.preventDefault()}>
+              <input 
+                type="email" 
+                placeholder="Enter your email" 
+                className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-500"
+                required
+              />
+              <Button type="submit" variant="primary" className="w-full">
+                Subscribe
+              </Button>
+            </form>
           </div>
         </div>
         
         {/* Copyright Section */}
-        <div className="border-t border-gray-800 pt-8 text-center text-sm">
+        <div className="border-t border-gray-800 pt-8 text-center text-sm flex flex-col md:flex-row justify-between items-center">
           <p>&copy; {new Date().getFullYear()} Context Cart. All rights reserved.</p>
+          <div className="mt-4 md:mt-0 space-x-4">
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+          </div>
         </div>
       </div>
     </footer>
