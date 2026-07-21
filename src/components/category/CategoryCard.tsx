@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Category } from '../../types/product';
+import type { Category } from '../../types/product';
 import { ArrowRight } from 'lucide-react';
 
 interface CategoryCardProps {

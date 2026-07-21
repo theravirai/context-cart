@@ -1,5 +1,5 @@
 import api from './api';
-import { Product, ProductsResponse, Category } from '../types/product';
+import type { Product, ProductsResponse, Category } from '../types/product';
 
 export const productService = {
   getProducts: async (limit = 20, skip = 0): Promise<ProductsResponse> => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Product } from '../../types/product';
+import type { Product } from '../../types/product';
 import { productService } from '../../services/productService';
 import { ArrowLeft, ShoppingCart, Star, Package, ShieldCheck } from 'lucide-react';
 import QuantitySelector from '../../components/product/QuantitySelector';
