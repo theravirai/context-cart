@@ -6,6 +6,7 @@ import { ArrowLeft, ShoppingCart, Star, Package, ShieldCheck } from 'lucide-reac
 import QuantitySelector from '../../components/product/QuantitySelector';
 import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
+import { useCart } from '../../context/CartContext';
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,6 +15,7 @@ const ProductDetails = () => {
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const [activeImage, setActiveImage] = useState<string>('');
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -65,8 +67,11 @@ const ProductDetails = () => {
   }
 
   const handleAddToCart = () => {
-    // In Phase 11 (Cart), this will hook into the cart context/storage
-    console.log(`Added ${quantity} of ${product.title} to cart`);
+    if (product) {
+      addToCart(product, quantity);
+      // Optional: We could show a toast notification here
+      console.log(`Added ${quantity} of ${product.title} to cart via Context`);
+    }
   };
 
   return (

@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart, User, Menu, X } from 'lucide-react';
 import SearchBar from '../common/SearchBar';
 import Badge from '../common/Badge';
+import { useCart } from '../../context/CartContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { itemCount } = useCart();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -39,9 +41,11 @@ const Navbar = () => {
           
           <Link to="/cart" className="relative text-gray-300 hover:text-white transition-colors flex items-center">
             <ShoppingCart className="h-6 w-6" />
-            <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0">
-              3
-            </Badge>
+            {itemCount > 0 && (
+              <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0">
+                {itemCount}
+              </Badge>
+            )}
           </Link>
         </div>
 
@@ -49,9 +53,11 @@ const Navbar = () => {
         <div className="flex md:hidden items-center space-x-4">
           <Link to="/cart" className="relative text-gray-300 hover:text-white transition-colors flex items-center">
             <ShoppingCart className="h-6 w-6" />
-            <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0">
-              3
-            </Badge>
+            {itemCount > 0 && (
+              <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0">
+                {itemCount}
+              </Badge>
+            )}
           </Link>
           <button 
             onClick={toggleMenu} 
