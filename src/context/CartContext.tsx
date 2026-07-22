@@ -1,25 +1,14 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, ReactNode } from 'react';
 import type { CartItem, CartContextType } from '../types/cart';
 import type { Product } from '../types/product';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 const CART_STORAGE_KEY = 'context-cart-cart';
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [items, setItems] = useState<CartItem[]>(() => {
-    try {
-      const stored = localStorage.getItem(CART_STORAGE_KEY);
-      return stored ? JSON.parse(stored) : [];
-    } catch (error) {
-      console.error('Failed to parse cart from local storage:', error);
-      return [];
-    }
-  });
-
-  useEffect(() => {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
-  }, [items]);
+  const [items, setItems] = useLocalStorage<CartItem[]>(CART_STORAGE_KEY, []);
 
   const addToCart = (product: Product, quantity: number) => {
     setItems((prevItems) => {

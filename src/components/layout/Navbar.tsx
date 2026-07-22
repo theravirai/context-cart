@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, User, Menu, X } from 'lucide-react';
+import { ShoppingCart, User, Menu, X, Sun, Moon } from 'lucide-react';
 import SearchBar from '../common/SearchBar';
 import Badge from '../common/Badge';
 import { useCart } from '../../context/CartContext';
+import { useTheme } from '../../context/ThemeContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { itemCount } = useCart();
+  const { theme, toggleTheme } = useTheme();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -34,6 +36,14 @@ const Navbar = () => {
 
         {/* Desktop Secondary Links & Icons */}
         <div className="hidden md:flex items-center space-x-6">
+          <button 
+            onClick={toggleTheme}
+            className="text-gray-300 hover:text-white transition-colors"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          </button>
+
           <Link to="/login" className="text-gray-300 hover:text-white transition-colors flex items-center gap-2">
             <User className="h-5 w-5" />
             <span>Login</span>
@@ -51,6 +61,14 @@ const Navbar = () => {
 
         {/* Mobile Menu Toggle & Cart Icon */}
         <div className="flex md:hidden items-center space-x-4">
+          <button 
+            onClick={toggleTheme}
+            className="text-gray-300 hover:text-white transition-colors"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          </button>
+          
           <Link to="/cart" className="relative text-gray-300 hover:text-white transition-colors flex items-center">
             <ShoppingCart className="h-6 w-6" />
             {itemCount > 0 && (
