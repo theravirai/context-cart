@@ -2,20 +2,22 @@ import type { ReactNode } from 'react';
 
 interface BadgeProps {
   children: ReactNode;
-  variant?: 'default' | 'destructive' | 'outline';
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary';
   className?: string;
 }
 
 const Badge = ({ children, variant = 'default', className = '' }: BadgeProps) => {
-  const baseStyles = 'inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2';
+  const baseStyles = 'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2';
   
   const variants = {
-    default: 'bg-blue-600 text-white hover:bg-blue-700',
-    destructive: 'bg-red-600 text-white hover:bg-red-700',
-    outline: 'text-gray-200 border border-gray-600',
+    default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
+    secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+    destructive: 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
+    outline: 'text-foreground',
   };
 
-  const classes = `${baseStyles} ${variants[variant]} ${className}`;
+  // Fallback map since previous code might pass 'destructive' or 'default'
+  const classes = `${baseStyles} ${variants[variant] || variants.default} ${className}`;
 
   return (
     <div className={classes}>
