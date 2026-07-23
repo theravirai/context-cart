@@ -11,6 +11,13 @@ import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
 import NotFound from '../pages/NotFound/NotFound';
 
+import Contact from '../pages/Info/Contact';
+import FAQ from '../pages/Info/FAQ';
+import Returns from '../pages/Info/Returns';
+import Shipping from '../pages/Info/Shipping';
+import PrivacyPolicy from '../pages/Info/PrivacyPolicy';
+import TermsOfService from '../pages/Info/TermsOfService';
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -21,9 +28,20 @@ const AppRoutes = () => {
         <Route path="/categories" element={<Categories />} />
         <Route path="/categories/:slug" element={<CategoryProducts />} />
         <Route path="/cart" element={<Cart />} />
+        
+        {/* Info Pages */}
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/returns" element={<Returns />} />
+        <Route path="/shipping" element={<Shipping />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
+
+        {/* Auth Pages */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
