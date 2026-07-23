@@ -19,7 +19,7 @@ const Navbar = () => {
         
         {/* Logo */}
         <div className="flex items-center space-x-8">
-          <Link to="/" className="text-2xl font-bold tracking-wider text-blue-400">
+          <Link to="/" className="text-xl md:text-2xl font-bold tracking-wider text-blue-400">
             Context Cart
           </Link>
           {/* Desktop Primary Links */}

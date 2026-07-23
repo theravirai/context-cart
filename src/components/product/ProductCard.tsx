@@ -31,11 +31,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </Link>
         <p className="text-sm text-gray-400 mt-1 mb-4 line-clamp-2">{product.description}</p>
         
-        <div className="mt-auto pt-4 border-t border-gray-700 flex items-center justify-between">
+        <div className="mt-auto pt-4 border-t border-gray-700 flex items-center justify-between flex-wrap gap-2">
           <span className="text-xl font-bold text-white">${product.price.toFixed(2)}</span>
-          <Button size="sm" className="flex items-center gap-2" aria-label={`Add ${product.title} to cart`}>
-            <ShoppingCart className="h-4 w-4" />
-            Add
+          <Button size="sm" className="flex items-center justify-center gap-2 flex-1 sm:flex-none" aria-label={`Add ${product.title} to cart`}>
+            <ShoppingCart className="h-4 w-4 shrink-0" />
+            <span>Add</span>
           </Button>
         </div>
       </div>
