@@ -27,14 +27,14 @@ const About = () => {
   ];
 
   return (
-    <div className="bg-gray-900 min-h-screen pb-16">
+    <div className="bg-background min-h-screen pb-16 transition-colors">
       {/* Hero Section */}
-      <div className="relative py-24 sm:py-32 overflow-hidden border-b border-gray-800">
+      <div className="relative py-24 sm:py-32 overflow-hidden border-b border-border">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl mb-6">
-            About <span className="text-blue-500">Context Cart</span>
+          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl mb-6">
+            About <span className="text-primary">Context Cart</span>
           </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-300 max-w-2xl mx-auto">
+          <p className="mt-6 text-lg leading-8 text-muted-foreground max-w-2xl mx-auto">
             Context Cart is a modern, high-performance e-commerce platform built to demonstrate production-ready software engineering practices. 
             Designed from the ground up for speed, scalability, and an exceptional user experience.
           </p>
@@ -48,17 +48,17 @@ const About = () => {
         </div>
         
         {/* Decorative background */}
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-800 via-gray-900 to-gray-900 opacity-50"></div>
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background opacity-50 pointer-events-none"></div>
       </div>
 
       {/* Content Section */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-16 sm:py-24">
         <div className="mx-auto max-w-2xl lg:text-center mb-16">
-          <h2 className="text-base font-semibold leading-7 text-blue-400 uppercase tracking-wider">Our Vision</h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <h2 className="text-base font-semibold leading-7 text-primary uppercase tracking-wider">Our Vision</h2>
+          <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             Building the future of e-commerce
           </p>
-          <p className="mt-6 text-lg leading-8 text-gray-400">
+          <p className="mt-6 text-lg leading-8 text-muted-foreground">
             Phase 1 focuses on delivering a polished, blazing fast frontend storefront. Future phases will introduce a custom FastAPI backend, intelligent semantic search, and AI-powered autonomous customer support agents.
           </p>
         </div>
@@ -68,13 +68,13 @@ const About = () => {
           <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-4">
             {features.map((feature) => (
               <div key={feature.name} className="flex flex-col items-center text-center">
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-gray-800 border border-gray-700 shadow-sm">
-                  <feature.icon className="h-8 w-8 text-blue-400" aria-hidden="true" />
+                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-card border border-border shadow-sm">
+                  <feature.icon className="h-8 w-8 text-primary" aria-hidden="true" />
                 </div>
-                <dt className="text-xl font-semibold leading-7 text-white">
+                <dt className="text-xl font-semibold leading-7 text-foreground">
                   {feature.name}
                 </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-400">
+                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-muted-foreground">
                   <p className="flex-auto">{feature.description}</p>
                 </dd>
               </div>
