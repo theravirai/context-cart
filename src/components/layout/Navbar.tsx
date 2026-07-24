@@ -19,7 +19,8 @@ const Navbar = () => {
         
         {/* Logo */}
         <div className="flex items-center space-x-8">
-          <Link to="/" className="text-xl md:text-2xl font-bold tracking-wider text-blue-400">
+          <Link to="/" className="text-xl md:text-2xl font-bold tracking-wider text-primary flex items-center gap-3 group">
+            <img src="/logo.jpg" alt="Context Cart Logo" className="h-8 w-8 rounded-md object-cover group-hover:scale-110 transition-transform" />
             Context Cart
           </Link>
           {/* Desktop Primary Links */}
