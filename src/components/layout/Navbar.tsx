@@ -1,20 +1,22 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, User, Menu, X, Sun, Moon } from 'lucide-react';
+import { ShoppingCart, User, Menu, X, Sun, Moon, LogOut } from 'lucide-react';
 import SearchBar from '../common/SearchBar';
 import Badge from '../common/Badge';
 import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { itemCount } = useCart();
   const { theme, toggleTheme } = useTheme();
+  const { user, logout } = useAuth();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className="bg-gray-800 text-white shadow-md sticky top-0 z-50">
+    <header className="bg-background text-foreground shadow-sm border-b border-border sticky top-0 z-50 transition-colors">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         
         {/* Logo */}
@@ -25,8 +27,8 @@ const Navbar = () => {
           </Link>
           {/* Desktop Primary Links */}
           <nav className="hidden md:flex space-x-6">
-            <Link to="/products" className="text-gray-300 hover:text-white transition-colors">Products</Link>
-            <Link to="/categories" className="text-gray-300 hover:text-white transition-colors">Categories</Link>
+            <Link to="/products" className="text-muted-foreground hover:text-foreground transition-colors font-medium">Products</Link>
+            <Link to="/categories" className="text-muted-foreground hover:text-foreground transition-colors font-medium">Categories</Link>
           </nav>
         </div>
 
@@ -39,21 +41,39 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-6">
           <button 
             onClick={toggleTheme}
-            className="text-gray-300 hover:text-white transition-colors"
+            className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </button>
 
-          <Link to="/login" className="text-gray-300 hover:text-white transition-colors flex items-center gap-2">
-            <User className="h-5 w-5" />
-            <span>Login</span>
-          </Link>
+          {user ? (
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+                <div className="h-7 w-7 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                  <User className="h-4 w-4" />
+                </div>
+                <span>{user.name.split(' ')[0]}</span>
+              </div>
+              <button 
+                onClick={logout}
+                className="text-muted-foreground hover:text-destructive transition-colors"
+                aria-label="Logout"
+              >
+                <LogOut className="h-5 w-5" />
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 font-medium">
+              <User className="h-5 w-5" />
+              <span>Login</span>
+            </Link>
+          )}
           
-          <Link to="/cart" className="relative text-gray-300 hover:text-white transition-colors flex items-center">
+          <Link to="/cart" className="relative text-muted-foreground hover:text-foreground transition-colors flex items-center">
             <ShoppingCart className="h-6 w-6" />
             {itemCount > 0 && (
-              <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0">
+              <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-[10px]">
                 {itemCount}
               </Badge>
             )}
@@ -64,23 +84,23 @@ const Navbar = () => {
         <div className="flex md:hidden items-center space-x-4">
           <button 
             onClick={toggleTheme}
-            className="text-gray-300 hover:text-white transition-colors"
+            className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </button>
           
-          <Link to="/cart" className="relative text-gray-300 hover:text-white transition-colors flex items-center">
+          <Link to="/cart" className="relative text-muted-foreground hover:text-foreground transition-colors flex items-center">
             <ShoppingCart className="h-6 w-6" />
             {itemCount > 0 && (
-              <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0">
+              <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-[10px]">
                 {itemCount}
               </Badge>
             )}
           </Link>
           <button 
             onClick={toggleMenu} 
-            className="text-gray-300 hover:text-white focus:outline-none"
+            className="text-muted-foreground hover:text-foreground focus:outline-none"
             aria-label="Toggle mobile menu"
           >
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -90,16 +110,33 @@ const Navbar = () => {
 
       {/* Mobile Menu Dropdown */}
       {isMenuOpen && (
-        <div className="md:hidden bg-gray-800 border-t border-gray-700">
+        <div className="md:hidden bg-background border-t border-border shadow-md absolute w-full">
           <div className="px-4 pt-4 pb-6 space-y-4">
             <SearchBar />
             <nav className="flex flex-col space-y-4 pt-2">
-              <Link onClick={toggleMenu} to="/products" className="text-gray-300 hover:text-white transition-colors">Products</Link>
-              <Link onClick={toggleMenu} to="/categories" className="text-gray-300 hover:text-white transition-colors">Categories</Link>
-              <Link onClick={toggleMenu} to="/login" className="text-gray-300 hover:text-white transition-colors flex items-center gap-2">
-                <User className="h-5 w-5" />
-                <span>Login</span>
-              </Link>
+              <Link onClick={toggleMenu} to="/products" className="text-muted-foreground hover:text-foreground transition-colors font-medium">Products</Link>
+              <Link onClick={toggleMenu} to="/categories" className="text-muted-foreground hover:text-foreground transition-colors font-medium">Categories</Link>
+              
+              {user ? (
+                <>
+                  <div className="flex items-center gap-2 text-foreground font-medium pt-2 border-t border-border/50">
+                    <User className="h-5 w-5 text-primary" />
+                    <span>Logged in as {user.name}</span>
+                  </div>
+                  <button 
+                    onClick={() => { logout(); toggleMenu(); }}
+                    className="text-muted-foreground hover:text-destructive transition-colors flex items-center gap-2 font-medium text-left"
+                  >
+                    <LogOut className="h-5 w-5" />
+                    <span>Logout</span>
+                  </button>
+                </>
+              ) : (
+                <Link onClick={toggleMenu} to="/login" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 font-medium pt-2 border-t border-border/50">
+                  <User className="h-5 w-5" />
+                  <span>Login</span>
+                </Link>
+              )}
             </nav>
           </div>
         </div>
