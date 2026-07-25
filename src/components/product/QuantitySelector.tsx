@@ -20,18 +20,18 @@ const QuantitySelector = ({ quantity, max, onChange }: QuantitySelectorProps) =>
   };
 
   return (
-    <div className="flex items-center border border-gray-700 rounded-md bg-gray-800 h-10 w-32">
+    <div className="flex items-center border border-input rounded-md bg-background h-10 w-32 transition-colors">
       <button 
         type="button"
         onClick={handleDecrement}
         disabled={quantity <= 1}
-        className="px-3 h-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 disabled:opacity-50 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors rounded-l-md"
+        className="px-3 h-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted disabled:opacity-50 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors rounded-l-md"
         aria-label="Decrease quantity"
       >
         <Minus className="h-4 w-4" />
       </button>
       
-      <div className="flex-1 flex items-center justify-center font-medium text-white border-x border-gray-700 h-full">
+      <div className="flex-1 flex items-center justify-center font-medium text-foreground border-x border-input h-full">
         {quantity}
       </div>
       
@@ -39,7 +39,7 @@ const QuantitySelector = ({ quantity, max, onChange }: QuantitySelectorProps) =>
         type="button"
         onClick={handleIncrement}
         disabled={quantity >= max}
-        className="px-3 h-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 disabled:opacity-50 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors rounded-r-md"
+        className="px-3 h-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted disabled:opacity-50 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors rounded-r-md"
         aria-label="Increase quantity"
       >
         <Plus className="h-4 w-4" />

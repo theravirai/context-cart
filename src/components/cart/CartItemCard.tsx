@@ -13,9 +13,9 @@ const CartItemCard = ({ item }: CartItemProps) => {
   const { product, quantity } = item;
 
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 bg-gray-800 border border-gray-700 rounded-lg">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 bg-card border border-border rounded-lg transition-colors">
       <Link to={`/products/${product.id}`} className="shrink-0">
-        <div className="w-24 h-24 bg-white rounded-md p-2 flex items-center justify-center overflow-hidden">
+        <div className="w-24 h-24 bg-white rounded-md p-2 flex items-center justify-center overflow-hidden border border-border">
           <img 
             src={product.thumbnail} 
             alt={product.title} 
@@ -26,10 +26,10 @@ const CartItemCard = ({ item }: CartItemProps) => {
       
       <div className="flex-1 min-w-0">
         <Link to={`/products/${product.id}`} className="hover:underline">
-          <h3 className="text-lg font-semibold text-white truncate">{product.title}</h3>
+          <h3 className="text-lg font-semibold text-card-foreground truncate">{product.title}</h3>
         </Link>
-        <p className="text-sm text-gray-400 capitalize">{product.category}</p>
-        <div className="mt-2 text-lg font-medium text-blue-400">
+        <p className="text-sm text-muted-foreground capitalize">{product.category}</p>
+        <div className="mt-2 text-lg font-medium text-primary">
           ${product.price.toFixed(2)}
         </div>
       </div>
@@ -41,13 +41,13 @@ const CartItemCard = ({ item }: CartItemProps) => {
           onChange={(newQuantity) => updateQuantity(product.id, newQuantity)}
         />
         
-        <div className="text-right sm:ml-4 sm:w-24 font-bold text-white text-lg">
+        <div className="text-right sm:ml-4 sm:w-24 font-bold text-foreground text-lg">
           ${(product.price * quantity).toFixed(2)}
         </div>
         
         <button 
           onClick={() => removeFromCart(product.id)}
-          className="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700 rounded-md transition-colors"
+          className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors"
           aria-label="Remove item"
         >
           <Trash2 className="h-5 w-5" />

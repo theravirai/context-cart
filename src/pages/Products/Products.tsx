@@ -43,10 +43,10 @@ const Products = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white tracking-tight">
+        <h1 className="text-3xl font-bold text-foreground tracking-tight">
           {query ? `Search Results for "${query}"` : 'All Products'}
         </h1>
-        <p className="mt-2 text-gray-400">
+        <p className="mt-2 text-muted-foreground">
           {query && !loading ? `Found ${products.length} result${products.length === 1 ? '' : 's'}` : query ? 'Searching...' : 'Browse our complete collection.'}
         </p>
       </div>
@@ -66,9 +66,9 @@ const Products = () => {
           </button>
         </div>
       ) : products.length === 0 ? (
-        <div className="text-center py-20 bg-gray-800 rounded-lg border border-gray-700">
-          <h2 className="text-xl font-medium text-white mb-2">No products found</h2>
-          <p className="text-gray-400">
+        <div className="text-center py-20 bg-card rounded-lg border border-border">
+          <h2 className="text-xl font-medium text-foreground mb-2">No products found</h2>
+          <p className="text-muted-foreground">
             {query ? 'Try adjusting your search terms or browsing our categories.' : 'Check back later for new arrivals.'}
           </p>
         </div>

@@ -29,14 +29,14 @@ const Categories = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white tracking-tight">Categories</h1>
-        <p className="mt-2 text-gray-400">Find exactly what you're looking for.</p>
+        <h1 className="text-3xl font-bold text-foreground tracking-tight">Categories</h1>
+        <p className="mt-2 text-muted-foreground">Find exactly what you're looking for.</p>
       </div>
 
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {Array.from({ length: 12 }).map((_, idx) => (
-            <div key={idx} className="h-32 bg-gray-800 rounded-lg animate-pulse border border-gray-700" />
+            <div key={idx} className="h-32 bg-muted rounded-lg animate-pulse border border-border" />
           ))}
         </div>
       ) : error ? (
@@ -50,9 +50,9 @@ const Categories = () => {
           </button>
         </div>
       ) : categories.length === 0 ? (
-        <div className="text-center py-20 bg-gray-800 rounded-lg border border-gray-700">
-          <h2 className="text-xl font-medium text-white mb-2">No categories found</h2>
-          <p className="text-gray-400">Check back later for updates.</p>
+        <div className="text-center py-20 bg-card rounded-lg border border-border">
+          <h2 className="text-xl font-medium text-foreground mb-2">No categories found</h2>
+          <p className="text-muted-foreground">Check back later for updates.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

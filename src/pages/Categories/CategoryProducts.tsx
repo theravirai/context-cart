@@ -36,13 +36,13 @@ const CategoryProducts = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="mb-8">
-        <Link to="/categories" className="inline-flex items-center text-gray-400 hover:text-white mb-4 transition-colors">
+        <Link to="/categories" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-4 transition-colors">
           <ArrowLeft className="h-4 w-4 mr-2" /> Back to Categories
         </Link>
-        <h1 className="text-3xl font-bold text-white tracking-tight capitalize">
+        <h1 className="text-3xl font-bold text-foreground tracking-tight capitalize">
           {slug ? slug.replace(/-/g, ' ') : 'Category'} Products
         </h1>
-        <p className="mt-2 text-gray-400">Viewing products in this category.</p>
+        <p className="mt-2 text-muted-foreground">Viewing products in this category.</p>
       </div>
 
       {loading ? (
@@ -60,9 +60,9 @@ const CategoryProducts = () => {
           </button>
         </div>
       ) : products.length === 0 ? (
-        <div className="text-center py-20 bg-gray-800 rounded-lg border border-gray-700">
-          <h2 className="text-xl font-medium text-white mb-2">No products found</h2>
-          <p className="text-gray-400">There are currently no products available in this category.</p>
+        <div className="text-center py-20 bg-card rounded-lg border border-border">
+          <h2 className="text-xl font-medium text-foreground mb-2">No products found</h2>
+          <p className="text-muted-foreground">There are currently no products available in this category.</p>
         </div>
       ) : (
         <ProductGrid>
