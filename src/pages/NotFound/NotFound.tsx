@@ -4,19 +4,19 @@ import Button from '../../components/common/Button';
 
 const NotFound = () => {
   return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
-      <h1 className="text-9xl font-extrabold text-gray-800 tracking-widest select-none">
+    <div className="min-h-[70vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden transition-colors">
+      <h1 className="text-9xl font-extrabold text-border/40 tracking-widest select-none">
         404
       </h1>
-      <div className="bg-blue-500 text-white px-2 py-1 text-sm font-bold rounded rotate-12 absolute top-1/2 -mt-16 sm:-mt-20">
+      <div className="bg-primary text-primary-foreground px-2 py-1 text-sm font-bold rounded rotate-12 absolute top-1/2 -mt-16 sm:-mt-20">
         Page Not Found
       </div>
       
       <div className="mt-8 space-y-4 z-10">
-        <h2 className="text-3xl font-bold text-white tracking-tight sm:text-4xl">
+        <h2 className="text-3xl font-bold text-foreground tracking-tight sm:text-4xl">
           Whoops! You're lost in space.
         </h2>
-        <p className="text-lg text-gray-400 max-w-md mx-auto">
+        <p className="text-lg text-muted-foreground max-w-md mx-auto">
           The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
         </p>
       </div>
