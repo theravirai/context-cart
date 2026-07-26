@@ -1,18 +1,22 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
 
 const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchParams] = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
   const navigate = useNavigate();
+
+  // Keep input in sync if the URL search parameter changes
+  useEffect(() => {
+    setSearchTerm(searchParams.get('q') || '');
+  }, [searchParams]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
       // Navigate to products page with search query
       navigate(`/products?q=${encodeURIComponent(searchTerm.trim())}`);
-      // Clear the input after submission for a cleaner UX
-      setSearchTerm('');
     }
   };
 
