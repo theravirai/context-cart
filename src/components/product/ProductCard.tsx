@@ -3,12 +3,20 @@ import { ShoppingCart } from 'lucide-react';
 import type { Product } from '../../types/product';
 import Button from '../common/Button';
 import Badge from '../common/Badge';
+import { useCart } from '../../context/CartContext';
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigating to product detail if button is inside a link (it's not here, but good practice)
+    addToCart(product, 1);
+  };
+
   return (
     <div className="bg-card text-card-foreground rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border flex flex-col h-full group/card relative">
       <Link to={`/products/${product.id}`} className="relative h-56 overflow-hidden block bg-white">
@@ -34,7 +42,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
         
         <div className="mt-auto pt-4 border-t border-border flex items-center justify-between flex-wrap gap-2">
           <span className="text-xl font-bold">${product.price.toFixed(2)}</span>
-          <Button size="sm" className="flex items-center justify-center gap-2 flex-1 sm:flex-none transition-all" aria-label={`Add ${product.title} to cart`}>
+          <Button 
+            size="sm" 
+            className="flex items-center justify-center gap-2 flex-1 sm:flex-none transition-all" 
+            aria-label={`Add ${product.title} to cart`}
+            onClick={handleAddToCart}
+          >
             <ShoppingCart className="h-4 w-4 shrink-0" />
             <span>Add</span>
           </Button>
