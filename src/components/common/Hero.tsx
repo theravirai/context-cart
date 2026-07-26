@@ -37,9 +37,16 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* Decorative background element for large screens */}
-      <div className="hidden lg:block lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-muted/20 pointer-events-none">
-        <div className="h-full w-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background/50 to-background"></div>
+      {/* Hero Image for large screens */}
+      <div className="hidden lg:block lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 overflow-hidden pointer-events-none">
+        <img 
+          src="/hero-banner.jpg" 
+          alt="Premium Collection" 
+          className="h-full w-full object-cover object-center"
+        />
+        {/* Gradient overlay to seamlessly blend the image into the dark/light background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
       </div>
     </div>
   );
