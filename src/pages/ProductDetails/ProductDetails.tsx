@@ -8,6 +8,8 @@ import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
 import { useCart } from '../../context/CartContext';
 
+import Breadcrumbs from '../../components/common/Breadcrumbs';
+
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
@@ -75,9 +77,13 @@ const ProductDetails = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
-      <Link to="/products" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-8 transition-colors">
-        <ArrowLeft className="h-4 w-4 mr-2" /> Back to Catalog
-      </Link>
+      <Breadcrumbs 
+        items={[
+          { label: 'Products', path: '/products' },
+          { label: product.category.replace(/-/g, ' '), path: `/categories/${product.category}` },
+          { label: product.title }
+        ]} 
+      />
       
       <div className="flex flex-col lg:flex-row gap-12">
         {/* Left Column: Image Gallery */}

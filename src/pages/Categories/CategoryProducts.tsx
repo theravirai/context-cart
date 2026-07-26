@@ -6,6 +6,7 @@ import { productService } from '../../services/productService';
 import ProductGrid from '../../components/product/ProductGrid';
 import ProductCard from '../../components/product/ProductCard';
 import LoadingSkeleton from '../../components/common/LoadingSkeleton';
+import Breadcrumbs from '../../components/common/Breadcrumbs';
 
 const CategoryProducts = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -36,9 +37,12 @@ const CategoryProducts = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="mb-8">
-        <Link to="/categories" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-4 transition-colors">
-          <ArrowLeft className="h-4 w-4 mr-2" /> Back to Categories
-        </Link>
+        <Breadcrumbs 
+          items={[
+            { label: 'Categories', path: '/categories' },
+            { label: slug ? slug.replace(/-/g, ' ') : 'Category' }
+          ]} 
+        />
         <h1 className="text-3xl font-bold text-foreground tracking-tight capitalize">
           {slug ? slug.replace(/-/g, ' ') : 'Category'} Products
         </h1>
