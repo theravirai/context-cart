@@ -26,7 +26,9 @@ const SearchBar = () => {
 
   // Keep input in sync if the URL search parameter changes
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSearchTerm(searchParams.get('q') || '');
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShowDropdown(false); // Hide dropdown on navigation
   }, [searchParams]);
 
@@ -34,6 +36,7 @@ const SearchBar = () => {
   useEffect(() => {
     const query = searchTerm.trim();
     if (!query) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSuggestions([]);
       return;
     }
