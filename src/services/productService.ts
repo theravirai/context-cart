@@ -2,8 +2,11 @@ import api from './api';
 import type { Product, ProductsResponse, Category } from '../types/product';
 
 export const productService = {
-  getProducts: async (limit = 20, skip = 0): Promise<ProductsResponse> => {
-    const response = await api.get<ProductsResponse>(`/products?limit=${limit}&skip=${skip}`);
+  getProducts: async (limit = 20, skip = 0, sortBy?: string, order?: 'asc' | 'desc'): Promise<ProductsResponse> => {
+    let url = `/products?limit=${limit}&skip=${skip}`;
+    if (sortBy) url += `&sortBy=${sortBy}`;
+    if (order) url += `&order=${order}`;
+    const response = await api.get<ProductsResponse>(url);
     return response.data;
   },
   
