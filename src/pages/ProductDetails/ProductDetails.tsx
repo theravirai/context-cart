@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import type { Product } from '../../types/product';
 import { productService } from '../../services/productService';
-import { ArrowLeft, ShoppingCart, Star, Package, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Star, Package, ShieldCheck, Check } from 'lucide-react';
 import QuantitySelector from '../../components/product/QuantitySelector';
 import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
 import { useCart } from '../../context/CartContext';
-
 import Breadcrumbs from '../../components/common/Breadcrumbs';
 
 const ProductDetails = () => {
@@ -17,6 +16,7 @@ const ProductDetails = () => {
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const [activeImage, setActiveImage] = useState<string>('');
+  const [isAdded, setIsAdded] = useState(false);
   const { addToCart } = useCart();
 
   useEffect(() => {
@@ -71,7 +71,8 @@ const ProductDetails = () => {
   const handleAddToCart = () => {
     if (product) {
       addToCart(product, quantity);
-      console.log(`Added ${quantity} of ${product.title} to cart via Context`);
+      setIsAdded(true);
+      setTimeout(() => setIsAdded(false), 2000);
     }
   };
 
@@ -170,12 +171,21 @@ const ProductDetails = () => {
           <div className="mt-auto">
             <Button 
               size="lg" 
-              className="w-full flex items-center justify-center gap-3 py-4 text-lg font-semibold"
+              className={`w-full flex items-center justify-center gap-3 py-4 text-lg font-semibold transition-all duration-300 ${isAdded ? 'bg-green-600 hover:bg-green-700 text-white !border-green-600' : ''}`}
               disabled={product.stock === 0}
               onClick={handleAddToCart}
             >
-              <ShoppingCart className="h-6 w-6" />
-              {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+              {isAdded ? (
+                <>
+                  <Check className="h-6 w-6" />
+                  Added to Cart
+                </>
+              ) : (
+                <>
+                  <ShoppingCart className="h-6 w-6" />
+                  {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                </>
+              )}
             </Button>
             
             <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">

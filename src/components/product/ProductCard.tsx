@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Check } from 'lucide-react';
 import type { Product } from '../../types/product';
 import Button from '../common/Button';
 import Badge from '../common/Badge';
@@ -11,10 +12,13 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart();
+  const [isAdded, setIsAdded] = useState(false);
 
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent navigating to product detail if button is inside a link (it's not here, but good practice)
+    e.preventDefault(); // Prevent navigating to product detail if button is inside a link
     addToCart(product, 1);
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 2000);
   };
 
   return (
@@ -44,12 +48,21 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <span className="text-xl font-bold">${product.price.toFixed(2)}</span>
           <Button 
             size="sm" 
-            className="flex items-center justify-center gap-2 flex-1 sm:flex-none transition-all" 
+            className={`flex items-center justify-center gap-2 flex-1 sm:flex-none transition-all duration-300 ${isAdded ? 'bg-green-600 hover:bg-green-700 text-white !border-green-600' : ''}`} 
             aria-label={`Add ${product.title} to cart`}
             onClick={handleAddToCart}
           >
-            <ShoppingCart className="h-4 w-4 shrink-0" />
-            <span>Add</span>
+            {isAdded ? (
+              <>
+                <Check className="h-4 w-4 shrink-0" />
+                <span>Added</span>
+              </>
+            ) : (
+              <>
+                <ShoppingCart className="h-4 w-4 shrink-0" />
+                <span>Add</span>
+              </>
+            )}
           </Button>
         </div>
       </div>
