@@ -1,100 +1,80 @@
-import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
-import type { User, LoginCredentials, RegisterData } from '../types/auth';
+import { createContext, useContext, useState } from 'react';
+import type { ReactNode } from 'react';
+import type { User, LoginCredentials, RegisterData as RegisterCredentials } from '../types/auth';
 
 interface AuthContextType {
-  user: Omit<User, 'password'> | null;
+  user: User | null;
+  isAuthenticated: boolean;
   login: (credentials: LoginCredentials) => Promise<void>;
-  register: (data: RegisterData) => Promise<void>;
+  register: (credentials: RegisterCredentials) => Promise<void>;
   logout: () => void;
-  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<Omit<User, 'password'> | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Initialize session from LocalStorage
-  useEffect(() => {
-    const sessionStr = localStorage.getItem('context-cart-session');
+  const [user, setUser] = useState<User | null>(() => {
+    const sessionStr = localStorage.getItem('context-cart-user');
     if (sessionStr) {
       try {
-        const session = JSON.parse(sessionStr);
-        setUser(session);
+        return JSON.parse(sessionStr);
       } catch (e) {
         console.error("Failed to parse session", e);
       }
     }
-    setIsLoading(false);
-  }, []);
+    return null;
+  });
 
-  // Helper to get users from LocalStorage mock DB
-  const getUsers = (): User[] => {
-    const usersStr = localStorage.getItem('context-cart-users');
-    return usersStr ? JSON.parse(usersStr) : [];
+  const login = async (credentials: LoginCredentials) => {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Simulate finding a dummy user
+    // Since we don't have a real backend, we'll just mock a successful login for any email
+    const mockUser: User = {
+      id: "1",
+      name: credentials.email.split('@')[0],
+      email: credentials.email
+    };
+    
+    setUser(mockUser);
+    localStorage.setItem('context-cart-user', JSON.stringify(mockUser));
   };
 
-  const login = async (credentials: LoginCredentials): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      // Simulate network delay for realism
-      setTimeout(() => {
-        const users = getUsers();
-        const foundUser = users.find(u => u.email === credentials.email && u.password === credentials.password);
-        
-        if (foundUser) {
-          const { password, ...sessionUser } = foundUser;
-          setUser(sessionUser);
-          localStorage.setItem('context-cart-session', JSON.stringify(sessionUser));
-          resolve();
-        } else {
-          reject(new Error("Invalid email or password"));
-        }
-      }, 600);
-    });
-  };
-
-  const register = async (data: RegisterData): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      // Simulate network delay
-      setTimeout(() => {
-        const users = getUsers();
-        if (users.some(u => u.email === data.email)) {
-          reject(new Error("Account with this email already exists"));
-          return;
-        }
-
-        const newUser: User = {
-          id: Math.random().toString(36).substring(2, 9),
-          ...data
-        };
-
-        // Save to Mock DB
-        users.push(newUser);
-        localStorage.setItem('context-cart-users', JSON.stringify(users));
-
-        // Auto login after registration
-        const { password, ...sessionUser } = newUser;
-        setUser(sessionUser);
-        localStorage.setItem('context-cart-session', JSON.stringify(sessionUser));
-        
-        resolve();
-      }, 600);
-    });
+  const register = async (credentials: RegisterCredentials) => {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Simulate user creation
+    const mockUser: User = {
+      id: String(Math.floor(Math.random() * 1000) + 1),
+      name: credentials.name,
+      email: credentials.email
+    };
+    
+    setUser(mockUser);
+    localStorage.setItem('context-cart-user', JSON.stringify(mockUser));
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('context-cart-session');
+    localStorage.removeItem('context-cart-user');
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, isLoading }}>
+    <AuthContext.Provider value={{
+      user,
+      isAuthenticated: !!user,
+      login,
+      register,
+      logout
+    }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 import type { Product } from '../../types/product';
 import { productService } from '../../services/productService';
 import ProductGrid from '../../components/product/ProductGrid';
