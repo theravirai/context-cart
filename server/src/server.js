@@ -2,9 +2,13 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import connectDB from './config/db.js';
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+
+// Connect to MongoDB
+connectDB();
 
 // CORS configuration for frontend
 app.use(
