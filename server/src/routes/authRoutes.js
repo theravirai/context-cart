@@ -1,7 +1,14 @@
 import { Router } from 'express';
-import { register, login } from '../controllers/authController.js';
+import {
+  register,
+  login,
+  refreshToken,
+  logout,
+  getMe,
+} from '../controllers/authController.js';
 import { registerValidation, loginValidation } from '../validators/authValidator.js';
 import { validate } from '../middleware/validate.js';
+import { authenticate } from '../middleware/authenticate.js';
 
 const router = Router();
 
@@ -14,5 +21,20 @@ router.post('/register', validate(registerValidation), register);
 // @desc    Authenticate user & issue tokens
 // @access  Public
 router.post('/login', validate(loginValidation), login);
+
+// @route   POST /api/auth/refresh-token
+// @desc    Issue a new access token using refresh token
+// @access  Public (Requires valid refresh token)
+router.post('/refresh-token', refreshToken);
+
+// @route   POST /api/auth/logout
+// @desc    Invalidate refresh token and clear cookie
+// @access  Authenticated
+router.post('/logout', authenticate, logout);
+
+// @route   GET /api/auth/me
+// @desc    Get logged-in user profile
+// @access  Authenticated
+router.get('/me', authenticate, getMe);
 
 export default router;
