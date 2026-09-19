@@ -76,3 +76,104 @@ export const getProductById = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * @desc    Create a new product
+ * @route   POST /api/products
+ * @access  Authenticated
+ */
+export const createProduct = async (req, res, next) => {
+  try {
+    const {
+      title,
+      description,
+      price,
+      category,
+      stock,
+      brand,
+      discountPercentage,
+      rating,
+      thumbnail,
+      images,
+    } = req.body;
+
+    const product = await Product.create({
+      title,
+      description,
+      price,
+      category,
+      stock,
+      brand: brand || 'Generic',
+      discountPercentage: discountPercentage || 0,
+      rating: rating || 4.5,
+      thumbnail: thumbnail || 'https://placehold.co/600x400?text=Product',
+      images: images || [],
+    });
+
+    return res.status(201).json({
+      message: 'Product created successfully',
+      product,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Update an existing product
+ * @route   PUT /api/products/:id
+ * @access  Authenticated
+ */
+export const updateProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Verify product exists before updating per assignment requirement
+    const existingProduct = await Product.findById(id);
+    if (!existingProduct) {
+      return res.status(404).json({
+        message: 'Product not found',
+      });
+    }
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true, runValidators: true }
+    );
+
+    return res.status(200).json({
+      message: 'Product updated successfully',
+      product: updatedProduct,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Delete a product
+ * @route   DELETE /api/products/:id
+ * @access  Authenticated
+ */
+export const deleteProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Verify product exists before deleting per assignment requirement
+    const existingProduct = await Product.findById(id);
+    if (!existingProduct) {
+      return res.status(404).json({
+        message: 'Product not found',
+      });
+    }
+
+    await Product.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      message: 'Product deleted successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
