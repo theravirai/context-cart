@@ -1,74 +1,104 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import type { User, LoginCredentials, RegisterData as RegisterCredentials } from '../types/auth';
+import type { User, LoginCredentials, RegisterData } from '../types/auth';
+import api, { setAccessToken } from '../services/api';
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
   login: (credentials: LoginCredentials) => Promise<void>;
-  register: (credentials: RegisterCredentials) => Promise<void>;
-  logout: () => void;
+  register: (data: RegisterData) => Promise<User>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(() => {
-    const sessionStr = localStorage.getItem('context-cart-user');
-    if (sessionStr) {
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Check initial authentication session on app load using httpOnly refresh cookie
+  useEffect(() => {
+    let isMounted = true;
+
+    const initializeAuth = async () => {
       try {
-        return JSON.parse(sessionStr);
-      } catch (e) {
-        console.error("Failed to parse session", e);
+        // Attempt silent refresh using the httpOnly cookie
+        const { data } = await api.post<{ accessToken: string }>('/auth/refresh-token');
+        if (data.accessToken) {
+          setAccessToken(data.accessToken);
+          // Fetch current user profile with the new access token
+          const profileRes = await api.get<{ user: User }>('/auth/me');
+          if (isMounted) {
+            setUser(profileRes.data.user);
+          }
+        }
+      } catch {
+        // No active session or expired cookie
+        if (isMounted) {
+          setUser(null);
+          setAccessToken(null);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
-    }
-    return null;
-  });
+    };
+
+    initializeAuth();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const login = async (credentials: LoginCredentials) => {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Simulate finding a dummy user
-    // Since we don't have a real backend, we'll just mock a successful login for any email
-    const mockUser: User = {
-      id: "1",
-      name: credentials.email.split('@')[0],
-      email: credentials.email
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('context-cart-user', JSON.stringify(mockUser));
+    const response = await api.post<{
+      message: string;
+      accessToken: string;
+      user: User;
+    }>('/auth/login', credentials);
+
+    const { accessToken, user: loggedInUser } = response.data;
+
+    // Securely keep access token in memory and update state
+    setAccessToken(accessToken);
+    setUser(loggedInUser);
   };
 
-  const register = async (credentials: RegisterCredentials) => {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Simulate user creation
-    const mockUser: User = {
-      id: String(Math.floor(Math.random() * 1000) + 1),
-      name: credentials.name,
-      email: credentials.email
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('context-cart-user', JSON.stringify(mockUser));
+  const register = async (data: RegisterData): Promise<User> => {
+    const response = await api.post<{
+      message: string;
+      user: User;
+    }>('/auth/register', data);
+
+    return response.data.user;
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('context-cart-user');
+  const logout = async () => {
+    try {
+      await api.post('/auth/logout');
+    } catch (err) {
+      console.error('Logout error:', err);
+    } finally {
+      setAccessToken(null);
+      setUser(null);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      isAuthenticated: !!user,
-      login,
-      register,
-      logout
-    }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated: !!user,
+        isLoading,
+        login,
+        register,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

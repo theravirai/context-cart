@@ -2,8 +2,18 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  password?: string; // Only stored in mock DB, omitted in active session state
+  createdAt?: string;
+  updatedAt?: string;
 }
 
-export type LoginCredentials = Pick<User, 'email' | 'password'>;
-export type RegisterData = Pick<User, 'name' | 'email' | 'password'>;
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface RegisterData {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword?: string;
+}
