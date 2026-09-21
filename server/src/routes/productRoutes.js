@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   getProducts,
+  getCategories,
   getProductById,
   createProduct,
   updateProduct,
@@ -20,6 +21,11 @@ const router = Router();
 // @desc    List all products (with optional filtering & pagination)
 // @access  Public
 router.get('/', getProducts);
+
+// @route   GET /api/products/categories
+// @desc    Get all unique categories
+// @access  Public
+router.get('/categories', getCategories);
 
 // @route   GET /api/products/:id
 // @desc    Get single product by ID

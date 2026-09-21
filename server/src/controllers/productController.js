@@ -56,6 +56,29 @@ export const getProducts = async (req, res, next) => {
 };
 
 /**
+ * @desc    Get all unique categories
+ * @route   GET /api/products/categories
+ * @access  Public
+ */
+export const getCategories = async (req, res, next) => {
+  try {
+    const rawCategories = await Product.distinct('category');
+    const categories = rawCategories.filter(Boolean).map((cat) => ({
+      slug: cat.toLowerCase(),
+      name: cat
+        .split('-')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' '),
+      url: `/categories/${cat.toLowerCase()}`,
+    }));
+
+    return res.status(200).json(categories);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * @desc    Get single product by ID
  * @route   GET /api/products/:id
  * @access  Public

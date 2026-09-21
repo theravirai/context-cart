@@ -30,11 +30,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const removeFromCart = (productId: number) => {
+  const removeFromCart = (productId: string | number) => {
     setItems((prevItems) => prevItems.filter(item => item.product.id !== productId));
   };
 
-  const updateQuantity = (productId: number, quantity: number) => {
+  const updateQuantity = (productId: string | number, quantity: number) => {
     setItems((prevItems) => 
       prevItems.map(item => {
         if (item.product.id === productId) {
