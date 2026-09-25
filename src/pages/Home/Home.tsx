@@ -21,7 +21,7 @@ const Home = () => {
         const [categoriesData, topRatedData, newArrivalsData] = await Promise.all([
           productService.getCategories(),
           productService.getProducts(4, 0, 'rating', 'desc'),
-          productService.getProducts(4, 0, 'meta.createdAt', 'desc')
+          productService.getProducts(4, 0, 'createdAt', 'desc')
         ]);
         
         setCategories(categoriesData.slice(0, 4));
