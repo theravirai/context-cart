@@ -42,6 +42,7 @@ const ProductModal = ({
   useEffect(() => {
     if (isOpen) {
       if (productToEdit) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setTitle(productToEdit.title || '');
         setDescription(productToEdit.description || '');
         setPrice(productToEdit.price ? productToEdit.price.toString() : '');

@@ -28,7 +28,6 @@ const SearchBar = () => {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSearchTerm(searchParams.get('q') || '');
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShowDropdown(false); // Hide dropdown on navigation
   }, [searchParams]);
 
