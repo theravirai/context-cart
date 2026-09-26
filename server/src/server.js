@@ -13,10 +13,24 @@ const PORT = process.env.PORT || 5001;
 // Connect to MongoDB
 connectDB();
 
-// CORS configuration for frontend
+// CORS configuration for frontend (supports local dev and deployed Vercel frontend)
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://context-cart-v1.vercel.app',
+  process.env.CLIENT_URL,
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      // Allow requests with no origin (curl, mobile, server-to-server)
+      if (!origin) return callback(null, true);
+      const normalized = origin.replace(/\/$/, '');
+      if (allowedOrigins.some((url) => url && url.replace(/\/$/, '') === normalized)) {
+        return callback(null, true);
+      }
+      return callback(new Error(`Origin ${origin} not allowed by CORS`));
+    },
     credentials: true,
   })
 );

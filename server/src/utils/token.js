@@ -26,11 +26,15 @@ export const generateRefreshToken = (userId) => {
 
 /**
  * Standard cookie configuration for Refresh Token
+ * Uses sameSite: 'none' and secure: true in production for cross-origin (Vercel -> Render) cookies
  */
-export const getRefreshTokenCookieOptions = () => ({
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
-  path: '/',
-  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-});
+export const getRefreshTokenCookieOptions = () => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  return {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
+    path: '/',
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+  };
+};
