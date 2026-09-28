@@ -9,9 +9,17 @@ export const setAccessToken = (token: string | null) => {
 
 export const getAccessToken = () => inMemoryAccessToken;
 
+// Base URL helper: ensures the URL always ends with '/api' even if omitted in environment variables
+const getBaseUrl = (): string => {
+  const envUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5001/api').trim().replace(/\/+$/, '');
+  return envUrl.endsWith('/api') ? envUrl : `${envUrl}/api`;
+};
+
+export const API_BASE_URL = getBaseUrl();
+
 // Base Axios instance configured for Context Cart Express REST API
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5001/api',
+  baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -83,7 +91,7 @@ api.interceptors.response.use(
     try {
       // Call refresh-token endpoint with cookies (handled via separate axios call to avoid interceptor loop)
       const { data } = await axios.post<{ accessToken: string }>(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5001/api'}/auth/refresh-token`,
+        `${API_BASE_URL}/auth/refresh-token`,
         {},
         { withCredentials: true }
       );
