@@ -58,10 +58,11 @@ const sampleProducts = [
     stock: 15,
     brand: 'ErgoComfort',
     category: 'home',
-    thumbnail: 'https://images.unsplash.com/photo-1580481077195-c3a9a3229608?w=600&auto=format&fit=crop&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&auto=format&fit=crop&q=80',
     images: [
-      'https://images.unsplash.com/photo-1580481077195-c3a9a3229608?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1505797149-43b0069ec26b?w=800&auto=format&fit=crop&q=80',
     ],
   },
   {
@@ -103,10 +104,10 @@ const sampleProducts = [
     stock: 80,
     brand: 'VoltGrid',
     category: 'electronics',
-    thumbnail: 'https://images.unsplash.com/photo-1622445262464-84b1456045b6?w=600&auto=format&fit=crop&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80',
     images: [
-      'https://images.unsplash.com/photo-1622445262464-84b1456045b6?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=800&auto=format&fit=crop&q=80',
     ],
   },
   {
@@ -223,10 +224,11 @@ const sampleProducts = [
     stock: 25,
     brand: 'NordicKitchen',
     category: 'home',
-    thumbnail: 'https://images.unsplash.com/photo-1584990347449-3990666d9b93?w=600&auto=format&fit=crop&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=600&auto=format&fit=crop&q=80',
     images: [
-      'https://images.unsplash.com/photo-1584990347449-3990666d9b93?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1585515320310-259814833e62?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1544233726-9f1d2b27be8b?w=800&auto=format&fit=crop&q=80',
     ],
   },
   {
